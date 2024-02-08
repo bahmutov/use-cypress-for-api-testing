@@ -1,0 +1,15 @@
+{
+  "name": "cypress-example-vue-vuex-rest",
+  "version": "1.0.0",
+  "description": "Testing Vue + Vuex + REST TodoMVC using Cypress",
+  "scripts": {
+    "start": "node ./server",
+    "reset": "node reset-db.js",
+    "reset:db": "npm run reset",
+    "reset:database": "npm run reset"
+  },
+  "dependencies": {
+    "json-server": "0.17.1",
+    "json-server-reset": "1.4.0"
+  }
+}

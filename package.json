@@ -1,0 +1,32 @@
+{
+  "name": "use-cypress-for-api-testing",
+  "version": "1.0.0",
+  "description": "Example using Cypress test runner to run API tests",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run",
+    "start": "npm start --prefix todomvc",
+    "cypress": "cypress open",
+    "dev": "start-test 3000 cypress",
+    "print-tests": "find-cypress-specs --names --tags",
+    "lint": "tsc --noEmit --pretty",
+    "ci": "start-test 3000 cy:run",
+    "cy:run": "cypress run",
+    "postinstall": "npm install --prefix todomvc"
+  },
+  "keywords": [
+    "cypress-example"
+  ],
+  "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com> (https://glebbahmutov.com/)",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "cy-spok": "^1.5.2",
+    "cypress": "13.6.4",
+    "cypress-recurse": "^1.27.0",
+    "find-cypress-specs": "1.41.4",
+    "prettier": "3.2.5",
+    "start-server-and-test": "1.14.0",
+    "typescript": "5.3.3"
+  }
+}
