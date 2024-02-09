@@ -8,14 +8,14 @@ export default defineConfig({
     baseUrl: 'http://localhost:3000',
     supportFile: false,
     viewportHeight: 1000,
-    setupNodeEvents(on, config) {
-      on(
-        'file:preprocessor',
-        cyAwaitPreprocessor({
-          // @ts-ignore
-          typescript: require.resolve('typescript'),
-        }),
-      )
-    },
+    // setupNodeEvents(on, config) {
+    //   on(
+    //     'file:preprocessor',
+    //     cyAwaitPreprocessor({
+    //       // @ts-ignore
+    //       typescript: require.resolve('typescript'),
+    //     }),
+    //   )
+    // },
   },
 })
