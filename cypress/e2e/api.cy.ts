@@ -104,4 +104,39 @@ describe('TodoMVC API', () => {
       }),
     )
   })
+
+  it('deletes the created item using its id', () => {
+    cy.request('POST', '/reset', { todos: [] })
+    const todo = {
+      title: 'write a test',
+      completed: false,
+    }
+    cy.api('POST', '/todos', todo)
+      .its('body.id')
+      .should('be.a', 'number')
+      // any time we get something from the application
+      // we need to "pass it forward" into the next command
+      .then((id) => {
+        cy.api('DELETE', `/todos/${id}`)
+          .its('status')
+          .should('equal', 200)
+      })
+  })
+
+  it('deletes the created item using its id (cypress-await)', async () => {
+    await cy.request('POST', '/reset', { todos: [] })
+    const todo = {
+      title: 'write a test',
+      completed: false,
+    }
+    const id = await cy
+      .api('POST', '/todos', todo)
+      .its('body.id')
+      .should('be.a', 'number')
+    await cy.log(`deleting todo ${id}`)
+    await cy
+      .api('DELETE', `/todos/${id}`)
+      .its('status')
+      .should('equal', 200)
+  })
 })
