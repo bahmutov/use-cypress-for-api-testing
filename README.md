@@ -2,6 +2,8 @@
 
 > Example using Cypress test runner to run API tests
 
+📝 Read the blog post [Use Cypress For API Testing](https://glebbahmutov.com/blog/use-cypress-for-api-testing/)
+
 ## Small print
 
 Author: Gleb Bahmutov &lt;gleb.bahmutov@gmail.com&gt; &copy; 2024
