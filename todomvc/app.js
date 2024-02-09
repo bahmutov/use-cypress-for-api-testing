@@ -78,32 +78,22 @@ function appStart() {
       },
 
       loadTodos({ commit, state }) {
-        console.log(
-          'loadTodos start, delay is %d',
-          state.delay,
-        )
-        setTimeout(() => {
-          commit('SET_LOADING', true)
+        commit('SET_LOADING', true)
 
-          axios
-            .get('/todos')
-            .then((r) => r.data)
-            .then((todos) => {
-              setTimeout(() => {
-                commit('SET_TODOS', todos)
-              }, state.renderDelay)
-            })
-            .catch((e) => {
-              console.error('could not load todos')
-              console.error(e.message)
-              console.error(e.response.data)
-            })
-            .finally(() => {
-              setTimeout(() => {
-                commit('SET_LOADING', false)
-              }, state.renderDelay)
-            })
-        }, state.delay)
+        axios
+          .get('/todos')
+          .then((r) => r.data)
+          .then((todos) => {
+            commit('SET_TODOS', todos)
+          })
+          .catch((e) => {
+            console.error('could not load todos')
+            console.error(e.message)
+            console.error(e.response.data)
+          })
+          .finally(() => {
+            commit('SET_LOADING', false)
+          })
       },
 
       /**
@@ -246,15 +236,16 @@ function appStart() {
         params.get('addTodoDelay') || '0',
       )
 
-      this.$store
-        .dispatch('setRenderDelay', renderDelay)
-        .then(() => {
-          this.$store
-            .dispatch('setDelay', delay)
-            .then(() => {
-              this.$store.dispatch('loadTodos')
-            })
-        })
+      // this.$store
+      //   .dispatch('setRenderDelay', renderDelay)
+      //   .then(() => {
+      // this.$store
+      //   .dispatch('setDelay', delay)
+      //   .then(() => {
+      console.log('created, loading todos')
+      this.$store.dispatch('loadTodos')
+      // })
+      // })
 
       // how would you test the periodic loading of todos?
       setInterval(() => {
@@ -353,13 +344,13 @@ function appStart() {
 
     var router = new Router()
 
-    ;['all', 'active', 'completed'].forEach(function (
-      visibility,
-    ) {
-      router.on(visibility, function () {
-        app.visibility = visibility
-      })
-    })
+    ;['all', 'active', 'completed'].forEach(
+      function (visibility) {
+        router.on(visibility, function () {
+          app.visibility = visibility
+        })
+      },
+    )
 
     router.configure({
       notfound: function () {
@@ -378,8 +369,4 @@ function appStart() {
   // }
 }
 
-if (appStartDelay > 0) {
-  setTimeout(appStart, appStartDelay)
-} else {
-  appStart()
-}
+appStart()
