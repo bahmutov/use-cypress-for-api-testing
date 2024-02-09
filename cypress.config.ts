@@ -1,7 +1,7 @@
 import { defineConfig } from 'cypress'
 // https://github.com/bahmutov/cypress-await
 // @ts-ignore
-import * as cyAwaitPreprocessor from 'cypress-await/src/preprocessor'
+import * as cyAwaitPreprocessor from 'cypress-await/src/preprocessor-sync-mode'
 
 export default defineConfig({
   e2e: {
