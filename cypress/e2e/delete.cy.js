@@ -1,3 +1,5 @@
+require('cypress-terminal-report/src/installLogsCollector')()
+
 // https://github.com/filiphric/cypress-plugin-api
 import 'cypress-plugin-api'
 
