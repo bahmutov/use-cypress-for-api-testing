@@ -1,142 +1,33 @@
 // https://github.com/filiphric/cypress-plugin-api
 import 'cypress-plugin-api'
-// https://github.com/bahmutov/cy-spok
-import spok from 'cy-spok'
+// https://github.com/bahmutov/cypress-each
+import 'cypress-each'
 
-// show more information in each assertion
-chai.config.truncateThreshold = 300
+// confirm we have 4 todo item ids
+const todoIds = Cypress.env('todoIds')
+expect(todoIds, '4 todo ids')
+  .to.be.an('array')
+  .and.to.have.length(4)
 
-describe('TodoMVC API', () => {
-  it('adds one item', () => {
-    // clear all existing backend data
-    cy.request('POST', '/reset', { todos: [] })
-    // confirm there are no todo items
-    cy.api('GET', '/todos')
-      .its('body')
-      .should('have.length', 0)
-    // add a new todo item
-    const todo = {
-      title: 'write a test',
-      completed: false,
-      id: 1,
-    }
-    cy.api('POST', '/todos', todo)
-    // confirm all todos now has a single item
-    cy.api('GET', '/todos')
-      .its('body')
-      .should('deep.equal', [todo])
-  })
-
-  it('completes an item', () => {
-    // clear all existing backend data
-    cy.request('POST', '/reset', { todos: [] })
-    // add a new todo item
-    const todo = {
-      title: 'write a test',
-      completed: false,
-      id: 1,
-    }
-    cy.api('POST', '/todos', todo)
-    // complete an item by patching the existing item
-    cy.api('PATCH', '/todos/1', { completed: true })
-    // confirm the item is now completed
-    cy.api('GET', '/todos')
-      .its('body')
-      .should('deep.equal', [
-        {
-          ...todo,
-          completed: true,
-        },
-      ])
-  })
-
-  it('deletes an item', () => {
-    // set several todos at once
-    const todos = [
-      {
-        title: 'write a test',
-        completed: false,
-        id: 1,
-      },
-      {
-        title: 'write another test',
-        completed: true,
-        id: 2,
-      },
-    ]
-    cy.api('POST', '/reset', { todos })
-    // delete the first item
-    cy.api('DELETE', '/todos/1')
-    // confirm the remaining items
-    cy.api('GET', '/todos')
-      .its('body')
-      .should('deep.equal', [todos[1]])
-  })
-
-  it('gets an id from the server', () => {
-    cy.request('POST', '/reset', { todos: [] })
-    const todo = {
-      title: 'write a test',
-      completed: false,
-    }
-    cy.api('POST', '/todos', todo).then((response) => {
-      expect(response.status, 'status code').to.equal(201)
-      // we don't know what id the server will assign
-      // thus we cannot compare the whole response body
-      expect(response.body, 'body').to.deep.include(todo)
-      expect(response.body.id, 'id').to.be.a('number')
-    })
-  })
-
-  it('gets an id from the server (cy-spok)', () => {
-    cy.request('POST', '/reset', { todos: [] })
-    const todo = {
-      title: 'write a test',
-      completed: false,
-    }
-    cy.api('POST', '/todos', todo).should(
-      spok({
-        status: 201,
-        body: {
-          ...todo,
-          id: spok.number,
-        },
-      }),
-    )
-  })
-
-  it('deletes the created item using its id', () => {
-    cy.request('POST', '/reset', { todos: [] })
-    const todo = {
-      title: 'write a test',
-      completed: false,
-    }
-    cy.api('POST', '/todos', todo)
-      .its('body.id')
-      .should('be.a', 'number')
-      // any time we get something from the application
-      // we need to "pass it forward" into the next command
-      .then((id) => {
-        cy.api('DELETE', `/todos/${id}`)
-          .its('status')
-          .should('equal', 200)
-      })
-  })
-
-  // sync mode from cypress-await
-  it('deletes the created item using its id (cypress-await)', () => {
-    cy.request('POST', '/reset', { todos: [] })
-    const todo = {
-      title: 'write a test',
-      completed: false,
-    }
-    const id = cy
-      .api('POST', '/todos', todo)
-      .its('body.id')
-      .should('be.a', 'number')
-    cy.log(`deleting todo ${id}`)
-    cy.api('DELETE', `/todos/${id}`)
-      .its('status')
-      .should('equal', 200)
-  })
+describe('4 todos', () => {
+  // create a separate test for each todo ID
+  // from the todoIds array
+  it.each(todoIds)(
+    'checking todo %K / 4 with id "%s"',
+    // @ts-ignore
+    (id, k) => {
+      // make an API request using cy.api command
+      // to fetch the todo with the given id /todos/:id
+      // confirm each todo has the expected id
+      // and the title "todo 1", "todo 2", etc
+      cy.api(`/todos/${id}`)
+        .its('body')
+        .should('have.include', {
+          id,
+          title: `todo ${k + 1}`,
+        })
+        // and that the todo has keys "id", "title", "completed"
+        .and('have.keys', ['id', 'title', 'completed'])
+    },
+  )
 })

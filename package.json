@@ -23,10 +23,9 @@
   "devDependencies": {
     "cy-spok": "^1.5.1",
     "cypress": "13.6.4",
-    "cypress-await": "^1.6.2",
+    "cypress-each": "^1.14.0",
     "cypress-plugin-api": "^2.11.1",
     "cypress-recurse": "^1.27.0",
-    "cypress-terminal-report": "^6.0.0",
     "find-cypress-specs": "1.41.4",
     "prettier": "3.2.5",
     "start-server-and-test": "1.14.0",
