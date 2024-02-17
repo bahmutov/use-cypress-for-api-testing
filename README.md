@@ -4,6 +4,10 @@
 
 📝 Read the blog post [Use Cypress For API Testing](https://glebbahmutov.com/blog/use-cypress-for-api-testing/)
 
+This app is used to teach lessons from 🎓 [Cypress Plugins](https://cypress.tips/courses/cypress-plugins)
+- [Lesson f13: Create tests from fetched data](https://cypress.tips/courses/cypress-plugins/lessons/f13)
+- [Lesson f14: Create N predetermined tests](https://cypress.tips/courses/cypress-plugins/lessons/f14)
+
 ## Small print
 
 Author: Gleb Bahmutov &lt;gleb.bahmutov@gmail.com&gt; &copy; 2024
