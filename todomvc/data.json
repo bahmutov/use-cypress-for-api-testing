@@ -1,16 +1,3 @@
 {
-  "todos": [
-    {
-      "id": "102",
-      "title": "write tests"
-    },
-    {
-      "id": "103",
-      "title": "run tests on CI"
-    },
-    {
-      "id": "104",
-      "title": "enjoy your day"
-    }
-  ]
+  "todos": []
 }

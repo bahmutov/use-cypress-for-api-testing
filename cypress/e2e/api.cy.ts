@@ -123,8 +123,9 @@ describe('TodoMVC API', () => {
       })
   })
 
-  // sync mode from cypress-await
-  it('deletes the created item using its id (cypress-await)', () => {
+  // only when using the sync mode from cypress-await
+  // in the cypress.config.ts
+  it.skip('deletes the created item using its id (cypress-await)', () => {
     cy.request('POST', '/reset', { todos: [] })
     const todo = {
       title: 'write a test',
@@ -134,6 +135,7 @@ describe('TodoMVC API', () => {
       .api('POST', '/todos', todo)
       .its('body.id')
       .should('be.a', 'number')
+    expect(id, 'id').to.be.a('string')
     cy.log(`deleting todo ${id}`)
     cy.api('DELETE', `/todos/${id}`)
       .its('status')
